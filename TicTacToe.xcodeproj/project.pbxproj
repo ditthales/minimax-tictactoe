@@ -17,6 +17,7 @@
 		4772390F2A849F3F006A0644 /* InitialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4772390E2A849F3F006A0644 /* InitialView.swift */; };
 		477239112A85108C006A0644 /* GameAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477239102A85108C006A0644 /* GameAssets.swift */; };
 		477239132A851163006A0644 /* PlayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477239122A851163006A0644 /* PlayerType.swift */; };
+		477239152A85199B006A0644 /* GameTexts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477239142A85199B006A0644 /* GameTexts.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		4772390E2A849F3F006A0644 /* InitialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialView.swift; sourceTree = "<group>"; };
 		477239102A85108C006A0644 /* GameAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameAssets.swift; sourceTree = "<group>"; };
 		477239122A851163006A0644 /* PlayerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerType.swift; sourceTree = "<group>"; };
+		477239142A85199B006A0644 /* GameTexts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTexts.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 			children = (
 				477238DC2A840B84006A0644 /* TicTacToeApp.swift */,
 				477239102A85108C006A0644 /* GameAssets.swift */,
+				477239142A85199B006A0644 /* GameTexts.swift */,
 				477239122A851163006A0644 /* PlayerType.swift */,
 				477238DE2A840B84006A0644 /* ContentView.swift */,
 				477239062A840EDC006A0644 /* GameView.swift */,
@@ -216,6 +219,7 @@
 				477238DF2A840B84006A0644 /* ContentView.swift in Sources */,
 				477239132A851163006A0644 /* PlayerType.swift in Sources */,
 				477239072A840EDC006A0644 /* GameView.swift in Sources */,
+				477239152A85199B006A0644 /* GameTexts.swift in Sources */,
 				477238DD2A840B84006A0644 /* TicTacToeApp.swift in Sources */,
 				4772390F2A849F3F006A0644 /* InitialView.swift in Sources */,
 				477239092A840FF4006A0644 /* GameEngine.swift in Sources */,

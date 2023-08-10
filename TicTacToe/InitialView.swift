@@ -11,10 +11,10 @@ struct InitialView: View {
     var body: some View {
         NavigationStack{
             VStack(spacing: 30){
-                Text("Escolha X ou O")
-                Text("X sempre começa jogando")
-                NavigationLink("Quero ser X", destination: GameView(gameEngine: GameEngine(), player: "x"))
-                NavigationLink("Quero ser O", destination: GameView(gameEngine: GameEngine(), player: "o"))
+                Text(GameTexts.escolha)
+                Text(GameTexts.xComeca)
+                NavigationLink("Quero ser X", destination: GameView(gameEngine: GameEngine(), player: .x))
+                NavigationLink("Quero ser O", destination: GameView(gameEngine: GameEngine(), player: .o))
             }
         }
     }

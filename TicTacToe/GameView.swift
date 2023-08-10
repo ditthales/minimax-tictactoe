@@ -31,26 +31,42 @@ struct GameView: View {
     
     var body: some View {
         ZStack {
+            Color(red: 32/255, green: 77/255, blue: 98/255)
+                .padding(-30)
             Image(GameAssets.tabuleiroAsset)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
             LazyVGrid(columns: gridItems, spacing: 0) {
                 ForEach((0...9), id: \.self){ num in
                     if gameEngine.tabuleiro[num] == .vazio{
-                        Image(GameAssets.celulaVazia)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
+                        Button{
+                            touchProcessor(num: num)
+                        }label:{
+                            Image(GameAssets.celulaVazia)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .padding()
+                        }
                     }else if gameEngine.tabuleiro[num] == .x{
-                        Image(player == .x ? GameAssets.jogador_X : GameAssets.adversario_X)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
+                        Button{
+                            touchProcessor(num: num)
+                        }label:{
+                            Image(player == .x ? GameAssets.jogador_X : GameAssets.adversario_X)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .padding()
+                        }
                     }else if gameEngine.tabuleiro[num] == .o{
-                        Image(player == .o ? GameAssets.jogador_O : GameAssets.adversario_O)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
+                        Button{
+                            touchProcessor(num: num)
+                        }label:{
+                            Image(player == .o ? GameAssets.jogador_O : GameAssets.adversario_O)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .padding()
+                        }
                     }
                 }
-                .padding()
             }
             
             if gameEngine.isGameOver(){
@@ -59,7 +75,7 @@ struct GameView: View {
                         Color.green
                             .opacity(opacity)
                         VStack(spacing: 20){
-                            Text("PARABÉNS VC GANHOU")
+                            Text(GameTexts.ganhou)
                             Button{
                                 gameEngine.resetTabuleiro()
                                 dismiss()
@@ -72,7 +88,7 @@ struct GameView: View {
                         Color.red
                             .opacity(opacity)
                         VStack(spacing: 20){
-                            Text("PERDEU PRA IA KKKKKKKKKKK")
+                            Text(GameTexts.perdeu)
                             Button{
                                 gameEngine.resetTabuleiro()
                                 dismiss()
@@ -85,7 +101,7 @@ struct GameView: View {
                         Color.yellow
                             .opacity(opacity)
                         VStack(spacing: 20){
-                            Text("DEU EMPATE MEU BOM, TENTA DNV")
+                            Text(GameTexts.empate)
                             Button{
                                 gameEngine.resetTabuleiro()
                                 dismiss()
@@ -105,19 +121,24 @@ struct GameView: View {
             }
         }
         .navigationBarBackButtonHidden()
+        .padding(gameEngine.isGameOver() ? 0 : 20)
+        .ignoresSafeArea()
     }
     
     func touchProcessor(num: Int){
         print(num)
         let jogada = gameEngine.tabuleiro[num]
         gameEngine.realizarJogada(jogador: player, jogada: num)
-        if !gameEngine.isGameOver() && (jogada != gameEngine.tabuleiro[num]) {
-            if player == .x{
-                gameEngine.jogada_O()
-            }else{
-                gameEngine.jogada_X()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            if !gameEngine.isGameOver() && (jogada != gameEngine.tabuleiro[num]) {
+                if player == .x{
+                    gameEngine.jogada_O()
+                }else{
+                    gameEngine.jogada_X()
+                }
             }
         }
+        
     }
 }
 
