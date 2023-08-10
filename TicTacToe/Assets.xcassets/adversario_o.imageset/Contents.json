@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "celula_x.png",
+      "filename" : "adversario_o.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "celula_x@2x.png",
+      "filename" : "adversario_o@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "celula_x@3x.png",
+      "filename" : "adversario_o@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

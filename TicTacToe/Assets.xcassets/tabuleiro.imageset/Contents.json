@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "celula_o.png",
+      "filename" : "tabuleiro.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "celula_o@2x.png",
+      "filename" : "tabuleiro@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "celula_o@3x.png",
+      "filename" : "tabuleiro@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

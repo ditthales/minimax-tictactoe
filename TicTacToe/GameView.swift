@@ -10,13 +10,16 @@ import SwiftUI
 struct GameView: View {
     @ObservedObject var gameEngine = GameEngine()
     
-    let player: String
+    let player: PlayerType
     
-    var enemy: String{
-        if player == "x"{
-            return "o"
-        }else{
-            return "x"
+    var enemy: PlayerType{
+        switch player {
+        case .x:
+            return .o
+        case .o:
+            return .x
+        case .vazio:
+            return .vazio
         }
     }
     
@@ -28,37 +31,28 @@ struct GameView: View {
     
     var body: some View {
         ZStack {
+            Image(GameAssets.tabuleiroAsset)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
             LazyVGrid(columns: gridItems, spacing: 0) {
                 ForEach((0...9), id: \.self){ num in
-                    if gameEngine.tabuleiro[num] == ""{
-                        Button{
-                            touchProcessor(num: num)
-                        }label: {
-                            Image("celula_vazia")
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                        }
-                        
-                    }else if gameEngine.tabuleiro[num] == "x"{
-                        Button{
-                            touchProcessor(num: num)
-                        }label: {
-                            Image("celula_x")
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                        }
-                    }else if gameEngine.tabuleiro[num] == "o"{
-                        Button{
-                            touchProcessor(num: num)
-                        }label: {
-                            Image("celula_o")
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                        }
+                    if gameEngine.tabuleiro[num] == .vazio{
+                        Image(GameAssets.celulaVazia)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                    }else if gameEngine.tabuleiro[num] == .x{
+                        Image(player == .x ? GameAssets.jogador_X : GameAssets.adversario_X)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                    }else if gameEngine.tabuleiro[num] == .o{
+                        Image(player == .o ? GameAssets.jogador_O : GameAssets.adversario_O)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
                     }
                 }
+                .padding()
             }
-            .padding()
+            
             if gameEngine.isGameOver(){
                 ZStack{
                     if gameEngine.checarVitoria(jogador: player){
@@ -106,8 +100,8 @@ struct GameView: View {
             
         }
         .onAppear{
-            if player == "o"{
-                gameEngine.realizarJogada(jogador: "x", jogada: 0)
+            if player == .o{
+                gameEngine.realizarJogada(jogador: .x, jogada: 0)
             }
         }
         .navigationBarBackButtonHidden()
@@ -115,16 +109,12 @@ struct GameView: View {
     
     func touchProcessor(num: Int){
         print(num)
-        if player == "x"{
-            let jogada = gameEngine.tabuleiro[num]
-            gameEngine.realizarJogada(jogador: "x", jogada: num)
-            if !gameEngine.isGameOver() && (jogada != gameEngine.tabuleiro[num]) {
+        let jogada = gameEngine.tabuleiro[num]
+        gameEngine.realizarJogada(jogador: player, jogada: num)
+        if !gameEngine.isGameOver() && (jogada != gameEngine.tabuleiro[num]) {
+            if player == .x{
                 gameEngine.jogada_O()
-            }
-        }else{
-            let jogada = gameEngine.tabuleiro[num]
-            gameEngine.realizarJogada(jogador: "o", jogada: num)
-            if !gameEngine.isGameOver() && (jogada != gameEngine.tabuleiro[num]){
+            }else{
                 gameEngine.jogada_X()
             }
         }
@@ -133,6 +123,6 @@ struct GameView: View {
 
 struct GameView_Previews: PreviewProvider {
     static var previews: some View {
-        GameView(player: "x")
+        GameView(player: .x)
     }
 }

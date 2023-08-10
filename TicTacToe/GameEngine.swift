@@ -8,22 +8,22 @@
 import Foundation
 
 class GameEngine: ObservableObject{
-    @Published var tabuleiro: [Int: String] = [
-        0: "", 1: "", 2: "",
-        3: "", 4: "", 5: "",
-        6: "", 7: "", 8: "",
+    @Published var tabuleiro: [Int: PlayerType] = [
+        0: .vazio, 1: .vazio, 2: .vazio,
+        3: .vazio, 4: .vazio, 5: .vazio,
+        6: .vazio, 7: .vazio, 8: .vazio,
     ]
     
     func resetTabuleiro(){
         tabuleiro = [
-            0: "", 1: "", 2: "",
-            3: "", 4: "", 5: "",
-            6: "", 7: "", 8: "",
+            0: .vazio, 1: .vazio, 2: .vazio,
+            3: .vazio, 4: .vazio, 5: .vazio,
+            6: .vazio, 7: .vazio, 8: .vazio,
         ]
     }
     
     func spaceIsFree(n: Int) -> Bool{
-        if tabuleiro[n] == ""{
+        if tabuleiro[n] == PlayerType.vazio{
             return true
         }
         return false
@@ -31,20 +31,20 @@ class GameEngine: ObservableObject{
     
     func isBoardEmpty() -> Bool{
         for v in tabuleiro.values{
-            if v != ""{
+            if v != PlayerType.vazio{
                 return false
             }
         }
         return true
     }
     
-    func realizarJogada(jogador: String, jogada: Int){
+    func realizarJogada(jogador: PlayerType, jogada: Int){
         if spaceIsFree(n: jogada){
             tabuleiro[jogada] = jogador
         }
     }
     
-    func checarVitoria(jogador: String) -> Bool{
+    func checarVitoria(jogador: PlayerType) -> Bool{
         if (tabuleiro[0] == tabuleiro[1] && tabuleiro [0] == tabuleiro[2] && tabuleiro[0] == jogador){
             return true
         }else if (tabuleiro[3] == tabuleiro[4] && tabuleiro [3] == tabuleiro[5] && tabuleiro[3] == jogador){
@@ -67,14 +67,14 @@ class GameEngine: ObservableObject{
     }
     
     func checarEmpate() -> Bool {
-        if !tabuleiro.values.contains("") && !checarVitoria(jogador: "x") && !checarVitoria(jogador: "o") {
+        if !tabuleiro.values.contains(PlayerType.vazio) && !checarVitoria(jogador: .x) && !checarVitoria(jogador: .o) {
             return true
         }
         return false
     }
     
     func isGameOver() -> Bool{
-        return checarVitoria(jogador: "x") || checarVitoria(jogador: "o") || checarEmpate()
+        return checarVitoria(jogador: .x) || checarVitoria(jogador: .o) || checarEmpate()
     }
 
     func jogada_X(){
@@ -83,16 +83,16 @@ class GameEngine: ObservableObject{
         
         for chave in tabuleiro.keys{
             if spaceIsFree(n: chave){
-                tabuleiro[chave] = "x"
+                tabuleiro[chave] = .x
                 let score = minimax(isMaximizing: false)
-                tabuleiro[chave] = ""
+                tabuleiro[chave] = PlayerType.vazio
                 if (score > melhorScore){
                     melhorScore = score
                     melhorJogada = chave
                 }
             }
         }
-        realizarJogada(jogador: "x", jogada: melhorJogada)
+        realizarJogada(jogador: .x, jogada: melhorJogada)
     }
 
     func jogada_O(){
@@ -101,22 +101,22 @@ class GameEngine: ObservableObject{
         
         for chave in tabuleiro.keys{
             if spaceIsFree(n: chave){
-                tabuleiro[chave] = "o"
+                tabuleiro[chave] = .o
                 let score = minimax(isMaximizing: true)
-                tabuleiro[chave] = ""
+                tabuleiro[chave] = PlayerType.vazio
                 if (score < melhorScore){
                     melhorScore = score
                     melhorJogada = chave
                 }
             }
         }
-        realizarJogada(jogador: "o", jogada: melhorJogada)
+        realizarJogada(jogador: .o, jogada: melhorJogada)
     }
   
     func minimax(isMaximizing: Bool, metrica: Int = 0) -> Int{
-        if checarVitoria(jogador: "x"){
+        if checarVitoria(jogador: .x){
             return 100-metrica
-        }else if checarVitoria(jogador: "o"){
+        }else if checarVitoria(jogador: .o){
             return -100+metrica
         }else if checarEmpate(){
             return 0
@@ -128,9 +128,9 @@ class GameEngine: ObservableObject{
             
             for chave in tabuleiro.keys{
                 if spaceIsFree(n: chave){
-                    tabuleiro[chave] = "x"
+                    tabuleiro[chave] = .x
                     let score = minimax(isMaximizing: false, metrica: metrica + 1)
-                    tabuleiro[chave] = ""
+                    tabuleiro[chave] = PlayerType.vazio
                     if (score > melhorScore){
                         melhorScore = score
                     }
@@ -142,9 +142,9 @@ class GameEngine: ObservableObject{
             
             for chave in tabuleiro.keys{
                 if spaceIsFree(n: chave){
-                    tabuleiro[chave] = "o"
+                    tabuleiro[chave] = .o
                     let score = minimax(isMaximizing: true, metrica: metrica + 1)
-                    tabuleiro[chave] = ""
+                    tabuleiro[chave] = PlayerType.vazio
                     if (score < melhorScore){
                         melhorScore = score
                     }
@@ -159,10 +159,10 @@ class GameEngine: ObservableObject{
         var contO = 0
         
         for valor in tabuleiro.values{
-            if valor == "x"{
+            if valor == .x{
                 contX += 1
             }
-            if valor == "o"{
+            if valor == .o{
                 contO += 1
             }
         }
